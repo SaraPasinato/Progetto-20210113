@@ -7,6 +7,7 @@
 #include "semaphore.h"
 #include "fifo.h"
 #include "pipe.h"
+#include "defines.h"
 
 int main(int argc, char * argv[]) {
     return 0;

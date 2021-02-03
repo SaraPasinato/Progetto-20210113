@@ -1,5 +1,6 @@
 CFLAGS   = -Wall -std=gnu99
-INCLUDES = -I .
+INCLUDES = -I ./inc
+INC_PARAMS = $(addprefix -I,$(INCLUDES))
 OBJDIR   = obj
 
 RECEIVER_SRCS = defines.c err_exit.c shared_memory.c semaphore.c pipe.c fifo.c receiver_manager.c
@@ -29,7 +30,7 @@ $(OBJDIR):
 	@mkdir -p $(OBJDIR)
 
 $(OBJDIR)/%.o: %.c
-	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS)  $(INCLUDES) $(CPPFLAGS) -o $@ -c $<
 
 clean:
 	@rm -vf ${RECEIVER_OBJS}
