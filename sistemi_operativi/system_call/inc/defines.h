@@ -10,6 +10,7 @@
 #include <time.h>
 #include <unistd.h>
 
+#define S_CHILD 2
 #define BUF_READ_SZ 256
 #define BUF_MESSAGE_SZ 256
 #define BUF_TYPE_MESSAGE_SZ 4
@@ -36,3 +37,7 @@ typedef struct message{
 */
 // controlla se è una isDirectory
 int isDirectory(char *path);
+// funzionalità dell processo S1
+void s1_process(char *file);
+//funzioni del processo S2 e S3
+void s2s3_process();
