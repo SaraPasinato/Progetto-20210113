@@ -12,12 +12,12 @@
 
 
 
-// controlla se il file esiste
-int cfileexists(const char* filename){
-    struct stat buffer;
-    int exist = stat(filename,&buffer);
-    if(exist == 0)
-        return 1;
-    else // -1
+// controlla se il file è una directory 
+int isDirectory(char *path){
+    struct stat statbuf;
+    if(stat(path, &statbuf) == -1)
         return 0;
+    else
+        return S_ISDIR(statbuf.st_mode);
 }
+

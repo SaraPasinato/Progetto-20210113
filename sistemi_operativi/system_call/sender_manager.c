@@ -25,8 +25,14 @@ int main(int argc, char *argv[]) {
   if (argc==2 && argv[1] != NULL){
     //basename funzione ritorna l'ultimo componente dal pathname puntato eliminado / dal percorso
     fileF0=basename(argv[1]);
-    printf("%s file F0\n",fileF0);
-   
+     printf("%s \n",fileF0);
+    //controllo che non sia una directory
+    if (isDirectory(fileF0)>0){
+        printf("Error:inserimento directory %s/\n",fileF0);
+        printf("Usage:\n");
+        printf("%s <directory>/<filename> \n",argv[0]);
+        return 1;
+    }
   }
   
   //Genera 3 figli Sender (S1,S2,S3)

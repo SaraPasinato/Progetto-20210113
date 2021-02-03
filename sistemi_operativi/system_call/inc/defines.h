@@ -34,5 +34,5 @@ typedef struct message{
 } message_t;
 
 */
-//file exist
-int cfileexists(const char* filename);
+// controlla se è una isDirectory
+int isDirectory(char *path);
