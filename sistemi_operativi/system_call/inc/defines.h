@@ -15,8 +15,10 @@
 #define BUF_MESSAGE_SZ 256
 #define BUF_TYPE_MESSAGE_SZ 4
 //dimensione massima di allocazione della stringa del path dei file
-#define PATH_SZ 1024
+#define WRITE_SZ 256
 #define SLEEP_TIME_S1 1
+//definizione path file F8.csv
+
 /**
 *
 * Struttura del messaggio del File F0.csv
@@ -39,5 +41,7 @@ typedef struct message{
 int isDirectory(char *path);
 // funzionalità dell processo S1
 void s1_process(char *file);
-//funzioni del processo S2 e S3
-void s2s3_process();
+//funzioni del processo S2 
+void process_s2(void);
+//funzioni del processo S3
+void process_s3(void);

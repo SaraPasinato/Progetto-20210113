@@ -6,13 +6,13 @@ OBJDIR   = obj
 RECEIVER_SRCS = defines.c err_exit.c shared_memory.c semaphore.c pipe.c fifo.c receiver_manager.c
 RECEIVER_OBJS = $(addprefix $(OBJDIR)/, $(RECEIVER_SRCS:.c=.o))
 
-SENDER_SRCS = defines.c err_exit.c shared_memory.c semaphore.c pipe.c fifo.c sender_manager.c
+SENDER_SRCS = defines.c err_exit.c shared_memory.c semaphore.c pipe.c fifo.c s1.c sender_manager.c
 SENDER_OBJS = $(addprefix $(OBJDIR)/, $(SENDER_SRCS:.c=.o))
 
 HACKLER_SRCS = defines.c err_exit.c hackler.c
 HACKLER_OBJS = $(addprefix $(OBJDIR)/, $(HACKLER_SRCS:.c=.o))
 
-all: $(OBJDIR) receiver_manager sender_manager hackler
+all: $(OBJDIR) receiver_manager sender_manager hackler 
 
 receiver_manager: $(RECEIVER_OBJS)
 	@echo "Making executable: "$@
