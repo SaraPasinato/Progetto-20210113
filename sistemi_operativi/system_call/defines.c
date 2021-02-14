@@ -26,8 +26,9 @@ int isDirectory(char *path){
         return S_ISDIR(statbuf.st_mode);
 }
 // funzionalità dell processo S1
-void s1_process(char *file){
+/*void s1_process(char *file){
   pid_t pid = getpid();
   printf("io sono s1: %d  %s\n", pid, file);
   
 }
+*/

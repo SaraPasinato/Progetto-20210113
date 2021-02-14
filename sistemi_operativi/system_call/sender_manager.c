@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
   }
   //pid del padre
    pid_t ppid= getpid();
-   printf("%d sono il padre\n",ppid);
+   printf("TEST: %d sono il padre\n",ppid);
   //Genera 3 figli Sender (S1,S2,S3)
  
   // Fork S1,S2,S3
@@ -55,31 +55,33 @@ int main(int argc, char *argv[]) {
     ErrExit("fork S1");
   if (s1== 0) {
     // S1 process
-     s1_process(fileF0);
+    printf("TEST: io sono S1 pid: %d \n",getpid());
      execv(args[0],args); 
-     perror("execv"); // Ne need to check execv() return value. If it returns, you know it failed.
+     perror("execv");
     return 2;
 
   }else {
+
     s2=fork();
     if(s2== -1)
       ErrExit("fork S2");
     if (s2==0){
-      printf("io sono s2\n ");
-       execv(args[0],args); 
-     perror("execv"); // Ne need to check execv() return value. If it returns, you know it failed.
+     printf("TEST: io sono S2 pid: %d \n",getpid());
+      execv(args[0],args); 
+     perror("execv");
     return 2;
-     // s2s3_process();
+    
     }else{
+
     s3=fork();
     if(s3== -1)
-      ErrExit("fork S3");
+    ErrExit("fork S3");
     if (s3==0){
-      printf("io sono s3\n ");
-       execv(args[0],args); 
-     perror("execv"); // Ne need to check execv() return value. If it returns, you know it failed.
+     printf("TEST: io sono S3 pid: %d \n",getpid());
+     execv(args[0],args); 
+     perror("execv"); /
     return 2;
-     // s2s3_process();
+     
     }
     }
   }

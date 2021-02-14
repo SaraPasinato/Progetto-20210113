@@ -38,4 +38,4 @@ typedef struct message{
 // controlla se è una isDirectory
 int isDirectory(char *path);
 // funzionalità dell processo S1
-void s1_process(char *file);
+//void s1_process(char *file);
