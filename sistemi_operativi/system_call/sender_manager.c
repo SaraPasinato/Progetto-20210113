@@ -49,6 +49,7 @@ int main(int argc, char *argv[]) {
  
   // Fork S1,S2,S3
   pid_t s1,s2,s3;
+  //argomenti args per execv
   char *args[]={"./s1",pathfile,NULL};
   s1 = fork();
   if (s1== -1)
@@ -79,7 +80,7 @@ int main(int argc, char *argv[]) {
     if (s3==0){
      printf("TEST: io sono S3 pid: %d \n",getpid());
      execv(args[0],args); 
-     perror("execv"); /
+     perror("execv"); 
     return 2;
      
     }
@@ -89,14 +90,21 @@ int main(int argc, char *argv[]) {
   
   
   //genera il file F8.csv da parte di sender Menager
-
+  
  // aspetto che i figli terminino
  int status;
   pid_t wait_result;
 
     while ((wait_result = wait(&status)) != -1)
     {
-        printf("Process %lu returned result: %d\n", (unsigned long) wait_result, status);
+        if (status==0){
+           printf("Process %lu terminated normally.\n\n", (unsigned long) wait_result);
+        }else{
+           printf("Process %lu terminated erminated with  error:\n\n", (unsigned long) wait_result);
+           perror("Error wait");
+           return 2;
+        }
+  
     }
 
     printf("All children have finished.\n");
