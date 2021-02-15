@@ -3,7 +3,6 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <libgen.h>
-#include <unistd.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
 
@@ -14,10 +13,11 @@
 #include "fifo.h"
 #include "pipe.h"
 
-
+// #########         Variabili      ################
 char *fileF0 =NULL;
 //path del file input
 char *pathfile=NULL;
+
 
 int main(int argc, char *argv[]) {
   //menu 
@@ -42,73 +42,79 @@ int main(int argc, char *argv[]) {
         return 1;
     }
   }
-  //pid del padre
-   pid_t ppid= getpid();
+
+  // ########### Creo il padre ###############
+  
+   pid_t ppid= getpid(); //pid del padre
    printf("TEST: %d sono il padre\n",ppid);
-  //Genera 3 figli Sender (S1,S2,S3)
- 
-  // Fork S1,S2,S3
+
+  // ######### Genera 3 figli Sender (S1,S2,S3) #########
+
   pid_t s1,s2,s3;
-  //argomenti args per execv
+  //argomenti args per execv s1
   char *args[]={"./s1",pathfile,NULL};
-  s1 = fork();
+  //TODO argomenti per s2 e S3
+
+   creatFile("OutputFiles/F8.csv");  
+  s1 = fork(); //creo s1
+
   if (s1== -1)
     ErrExit("fork S1");
   if (s1== 0) {
-    // S1 process
+    // Codice s1 
     printf("TEST: io sono S1 pid: %d \n",getpid());
      execv(args[0],args); 
      perror("execv");
     return 2;
 
   }else {
-
+    // codice s2
     s2=fork();
     if(s2== -1)
       ErrExit("fork S2");
     if (s2==0){
-     printf("TEST: io sono S2 pid: %d \n",getpid());
-      execv(args[0],args); 
-     perror("execv");
-    return 2;
-    
-    }else{
+        printf("TEST: io sono S2 pid: %d \n",getpid());
+          execv(args[0],args); 
+        perror("execv");
+        return 2;
+      
+      }else{
+          // codice s3
+        s3=fork();
+        if(s3== -1)
+        ErrExit("fork S3");
 
-    s3=fork();
-    if(s3== -1)
-    ErrExit("fork S3");
-    if (s3==0){
-     printf("TEST: io sono S3 pid: %d \n",getpid());
-     execv(args[0],args); 
-     perror("execv"); 
-    return 2;
-     
-    }
-    }
+        if (s3==0){
+          printf("TEST: io sono S3 pid: %d \n",getpid());
+          execv(args[0],args); 
+          perror("execv"); 
+          return 2;
+        
+        }
+      }
   }
   
   
   
-  //genera il file F8.csv da parte di sender Menager
+  // ######## SM genera il file F8.csv  ############
   
- // aspetto che i figli terminino
- int status;
-  pid_t wait_result;
+ //########## aspetto che i figli terminino ###############
+  int status;//stato wait
+  pid_t wait_result; //pid tel figlio terminato
 
-    while ((wait_result = wait(&status)) != -1)
-    {
-        if (status==0){
-           printf("Process %lu terminated normally.\n\n", (unsigned long) wait_result);
-        }else{
-           printf("Process %lu terminated erminated with  error:\n\n", (unsigned long) wait_result);
-           perror("Error wait");
-           return 2;
-        }
-  
-    }
-
-    printf("All children have finished.\n");
-
-    return 0;
+  while ((wait_result = wait(&status)) != -1)
+  {
+     if (status==0){
+       printf("\nProcess %lu terminated normally.\n\n", (unsigned long) wait_result);
+     }else{
+       printf("Process %lu terminated  with  error:\n\n", (unsigned long) wait_result);
+       perror("Error wait");
+       return 2;
+     }
+  }
+ 
+  printf("All children have finished.Terminated normally.\n");
+ 
+  return 0;
 }
 

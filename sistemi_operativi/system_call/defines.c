@@ -1,16 +1,17 @@
 #include <stdio.h>
-#include <sys/types.h>
-#include <unistd.h>
 #include <string.h>
 #include <stdint.h>
 #include <stddef.h>
 #include <time.h>
-#include <unistd.h>
-#include "defines.h"
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <fcntl.h>
 #include <unistd.h>
-int i=1;
+#include "defines.h"
+#include "err_exit.h"
+
+//intestazione file F8 e F9
+char * strHead="Id;PID";
 /// @file defines.c
 /// @brief Contiene l'implementazione delle funzioni
 ///         specifiche del progetto.
@@ -25,10 +26,30 @@ int isDirectory(char *path){
     else
         return S_ISDIR(statbuf.st_mode);
 }
-// funzionalità dell processo S1
-/*void s1_process(char *file){
-  pid_t pid = getpid();
-  printf("io sono s1: %d  %s\n", pid, file);
+
+//creat file 
+
+int creatFile(char *pathname){
+  //TODO Controllo spazi
+ /* char *dir ="../OutputFiles/";
+  dir=strcat(dir,pathname);
+  dir=strcat(dir,".csv");
+  */
+  printf("\n Creating file....  \n");
+  int fd; //file descriptor
+  if( access( pathname, F_OK ) == 0 ) {
+      // file exists
+  fd=open(pathname,O_RDWR|O_APPEND,S_IRUSR | S_IRWXU);
+  } else {
+      // file doesn't exist
+    fd=open(pathname,O_RDWR| O_CREAT |O_EXCL,S_IRUSR | S_IRWXU);
+  }
   
+  if(fd ==-1){
+   perror("error open file");
+   printf("\n");
+   return 2;
+  }
+   printf("\n Created file.\n");
+   return 0;
 }
-*/
