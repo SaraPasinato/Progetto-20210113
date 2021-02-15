@@ -6,12 +6,12 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 
-#include "err_exit.h"
-#include "defines.h"
-#include "shared_memory.h"
-#include "semaphore.h"
-#include "fifo.h"
-#include "pipe.h"
+#include "inc/err_exit.h"
+#include "inc/defines.h"
+#include "inc/shared_memory.h"
+#include "inc/semaphore.h"
+#include "inc/fifo.h"
+#include "inc/pipe.h"
 
 // #########         Variabili      ################
 char *fileF0 =NULL;
@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
   char *args[]={"./s1",pathfile,NULL};
   //TODO argomenti per s2 e S3
 
-   creatFile("OutputFiles/F8.csv");  
+  
   s1 = fork(); //creo s1
 
   if (s1== -1)
@@ -94,9 +94,10 @@ int main(int argc, char *argv[]) {
       }
   }
   
-  
-  
   // ######## SM genera il file F8.csv  ############
+
+   writeFileF8("OutputFiles/prova.csv");
+  
   
  //########## aspetto che i figli terminino ###############
   int status;//stato wait

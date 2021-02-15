@@ -7,8 +7,9 @@
 #include <sys/types.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include "defines.h"
-#include "err_exit.h"
+
+#include "inc/defines.h"
+#include "inc/err_exit.h"
 
 //intestazione file F8 e F9
 char * strHead="Id;PID";
@@ -51,5 +52,23 @@ int creatFile(char *pathname){
    return 2;
   }
    printf("\n Created file.\n");
+   return fd;
+}
+
+//write FileF8
+int writeFileF8(char *pathname){
+  //controllo e creo all'occorrenza file
+ int  fd= creatFile(pathname);
+  ssize_t numWrite;//controllo scrittura
+ 
+  
+  //scrivo header
+  numWrite=write(fd,strHead,sizeof(strHead));
+  if (numWrite != sizeof(strHead)){
+       perror("error write fileF8");
+       printf("\n");
+       return 2;
+  }
+
    return 0;
 }

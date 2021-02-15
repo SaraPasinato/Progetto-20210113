@@ -45,8 +45,15 @@ typedef struct message{
 int isDirectory(char *path);
 
 /*
-  @brief    : crea file e se esiste lo riscrive
+  @brief    : crea file e se non esiste 
   @param    : name  path del file da creare o riscrivere
    
 */
 int creatFile(char *pathname);
+/*
+  @brief    : crea file e se non esiste lo riscrive 
+  @param    : name  path del file da creare o riscrivere
+   
+*/
+int writeFileF8(char *pathname);
+
